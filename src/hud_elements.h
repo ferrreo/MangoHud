@@ -32,6 +32,7 @@ class HudElements{
         float old_scale;
         float res_width, res_height;
         bool is_vulkan = true, gamemode_bol = false, vkbasalt_bol = false;
+        std::string falcond_text;
         int place;
         int text_column = 1;
         int table_columns_count = 0;
@@ -96,6 +97,7 @@ class HudElements{
         static void custom_text();
         static void vkbasalt();
         static void gamemode();
+        static void falcond();
         static void graphs();
         static void _exec();
         static void battery();

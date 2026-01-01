@@ -121,6 +121,42 @@ void update_hw_info(const struct overlay_params& params, uint32_t vendorID)
          gpus->get_metrics();
    }
 
+   if (real_params->enabled[OVERLAY_PARAM_ENABLED_falcond]) {
+       std::ifstream falcond_status_file("/var/lib/falcond/status");
+       std::string line;
+       std::string active_profile;
+       bool found_profile = false;
+
+       if (falcond_status_file.is_open()) {
+           while (std::getline(falcond_status_file, line)) {
+               if (line.find("ACTIVE_PROFILE:") != std::string::npos) {
+                   size_t colon_pos = line.find(":");
+                   if (colon_pos != std::string::npos && colon_pos + 1 < line.length()) {
+                       active_profile = line.substr(colon_pos + 1);
+                       trim(active_profile);
+                       found_profile = true;
+                       break;
+                   }
+               }
+           }
+           falcond_status_file.close();
+       }
+
+       if (found_profile) {
+           std::string lower_profile = active_profile;
+           std::transform(lower_profile.begin(), lower_profile.end(), lower_profile.begin(),
+               [](unsigned char c){ return std::tolower(c); });
+
+           if (lower_profile == "none" || lower_profile == "(none)" || active_profile.empty()) {
+               HUDElements.falcond_text = "Inactive";
+           } else {
+               HUDElements.falcond_text = "Active (" + active_profile + ")";
+           }
+       } else {
+           HUDElements.falcond_text = "Inactive";
+       }
+   }
+
 #ifdef __linux__
    if (real_params->enabled[OVERLAY_PARAM_ENABLED_battery])
       Battery_Stats.update();
@@ -865,6 +901,7 @@ void check_for_vkbasalt_and_gamemode() {
 
    if (lib_loaded("vkbasalt", HUDElements.g_gamescopePid))
       HUDElements.vkbasalt_bol = true;
+
 
    checked = true;
 #endif

@@ -1201,6 +1201,17 @@ void HudElements::gamemode(){
     }
 }
 
+void HudElements::falcond(){
+    if (HUDElements.params->enabled[OVERLAY_PARAM_ENABLED_falcond]){
+        ImguiNextColumnFirstItem();
+        ImGui::PushFont(HUDElements.sw_stats->font_secondary);
+        HUDElements.TextColored(HUDElements.colors.engine, "%s", "FALCOND");
+        ImguiNextColumnOrNewRow();
+        right_aligned_text(HUDElements.colors.text, HUDElements.ralign_width, "%s", HUDElements.falcond_text.c_str());
+        ImGui::PopFont();
+    }
+}
+
 void HudElements::vkbasalt(){
     if (HUDElements.params->enabled[OVERLAY_PARAM_ENABLED_vkbasalt]){
         ImguiNextColumnFirstItem();
@@ -1955,6 +1966,7 @@ void HudElements::sort_elements(const std::pair<std::string, std::string>& optio
         {"wine", {wine}},
         {"procmem", {procmem}},
         {"gamemode", {gamemode}},
+        {"falcond", {falcond}},
         {"vkbasalt", {vkbasalt}},
         {"engine_version", {engine_version}},
         {"vulkan_driver", {vulkan_driver}},
@@ -2088,6 +2100,7 @@ void HudElements::legacy_elements(const overlay_params* temp_params){
         ordered_functions.push_back({arch, "arch", value});
     if (temp_params->enabled[OVERLAY_PARAM_ENABLED_wine])
         ordered_functions.push_back({wine, "wine", value});
+
     if (temp_params->enabled[OVERLAY_PARAM_ENABLED_frame_timing])
         ordered_functions.push_back({frame_timing, "frame_timing", value});
     if (temp_params->enabled[OVERLAY_PARAM_ENABLED_frame_count])
@@ -2096,6 +2109,8 @@ void HudElements::legacy_elements(const overlay_params* temp_params){
         ordered_functions.push_back({gamescope_frame_timing, "gamescope_frame_timing", value});
     if (temp_params->enabled[OVERLAY_PARAM_ENABLED_gamemode])
         ordered_functions.push_back({gamemode, "gamemode", value});
+    if (temp_params->enabled[OVERLAY_PARAM_ENABLED_falcond])
+        ordered_functions.push_back({falcond, "falcond", value});
     if (temp_params->enabled[OVERLAY_PARAM_ENABLED_vkbasalt])
         ordered_functions.push_back({vkbasalt, "vkbasalt", value});
     if (temp_params->enabled[OVERLAY_PARAM_ENABLED_show_fps_limit])

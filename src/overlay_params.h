@@ -86,6 +86,7 @@ struct Tracepoint;
    OVERLAY_PARAM_BOOL(exec)                          \
    OVERLAY_PARAM_BOOL(vkbasalt)                      \
    OVERLAY_PARAM_BOOL(gamemode)                      \
+   OVERLAY_PARAM_BOOL(falcond)                       \
    OVERLAY_PARAM_BOOL(battery)                       \
    OVERLAY_PARAM_BOOL(battery_icon)                  \
    OVERLAY_PARAM_BOOL(fps_only)                      \
