@@ -122,7 +122,7 @@ void update_hw_info(const struct overlay_params& params, uint32_t vendorID)
    }
 
    if (real_params->enabled[OVERLAY_PARAM_ENABLED_falcond]) {
-       std::ifstream falcond_status_file("/var/lib/falcond/status");
+       std::ifstream falcond_status_file("/tmp/falcond_status");
        std::string line;
        std::string active_profile;
        bool found_profile = false;
